@@ -1,23 +1,24 @@
-import dotenv from "dotenv";
-import Helpers from "../../utils/Helpers";
+import dotenv from 'dotenv';
+import Helpers from '../../utils/Helpers';
+
+import DatabaseRepository from '../../repositories/DatabaseRepository';
+
 const HelpersInstance = new Helpers();
 dotenv.config({
   path: HelpersInstance.getPathEnv(process.env.NODE_ENV as string),
 });
 
-import DatabaseRepository from "../../repositories/DatabaseRepository";
-
 export default async (tables: string[] = []): Promise<boolean> => {
   const DatabaseRepositoryInstance = new DatabaseRepository();
-  await DatabaseRepositoryInstance.executeWithDatabase(async (CONN) => {
+  await DatabaseRepositoryInstance.executeWithDatabase(async CONN => {
     await Promise.all(
-      tables.map(async (table) => {
+      tables.map(async table => {
         const response = await DatabaseRepositoryInstance.truncateTable(
           CONN,
-          table
+          table,
         );
         return response;
-      })
+      }),
     );
     return true;
   });

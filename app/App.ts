@@ -1,17 +1,17 @@
-import dotenv from "dotenv";
-import express, { Application } from "express";
-import cors from "cors";
-import helmet from "helmet";
-import "express-async-errors";
-import Helpers from "./utils/Helpers";
+import dotenv from 'dotenv';
+import express, { Application } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import 'express-async-errors';
+import Helpers from './utils/Helpers';
+
+import errorMiddleware from './middlewares/error-middleware';
+import TransactionsRoutes from './routes/TransactionsRoutes';
 
 const HelpersInstance = new Helpers();
 dotenv.config({
   path: HelpersInstance.getPathEnv(process.env.NODE_ENV as string),
 });
-
-import errorMiddleware from "./middlewares/error-middleware";
-import IndexRoutes from "./routes/index";
 
 class App {
   public express: Application;
@@ -31,8 +31,8 @@ class App {
   }
 
   private routes(): void {
-    const IndexRoutesInstance = new IndexRoutes();
-    this.express.use("/main", IndexRoutesInstance.mainRoutes);
+    const TransactionsRoutesInstance = new TransactionsRoutes();
+    this.express.use('/transactions', TransactionsRoutesInstance.routes);
   }
 
   private middlewaresErrors(): void {
