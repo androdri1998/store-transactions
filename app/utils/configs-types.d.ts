@@ -6,4 +6,6 @@ export interface IStages {
 
 export interface IDatabaseTables {
   migrateVersions: string;
+  balances: string;
+  transactions: string;
 }

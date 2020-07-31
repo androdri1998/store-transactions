@@ -1,11 +1,13 @@
-import { IStages, IDatabaseTables } from "./configs-types";
+import { IStages, IDatabaseTables } from './configs-types';
 
 export const stages: IStages = {
-  DEV: "dev",
-  PROD: "prod",
-  TEST: "test",
+  DEV: 'dev',
+  PROD: 'prod',
+  TEST: 'test',
 };
 
 export const databaseTables: IDatabaseTables = {
-  migrateVersions: "migrate_versions",
+  migrateVersions: 'migrate_versions',
+  balances: 'balances',
+  transactions: 'transactions',
 };
