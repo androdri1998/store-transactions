@@ -2,17 +2,12 @@ import { v4 as uuidV4 } from 'uuid';
 import moment from 'moment';
 import { parseISO } from 'date-fns';
 
-enum EType {
-  INCOME = 'income',
-  OUTCOME = 'outcome',
-}
-
 export default class Transaction {
   id: string;
 
   title: string;
 
-  type: EType;
+  type: string;
 
   value: number;
 

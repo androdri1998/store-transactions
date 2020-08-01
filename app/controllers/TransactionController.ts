@@ -2,6 +2,7 @@
 import Database from '../database/Database';
 import CreateTransactionService from '../services/CreateTransactionService';
 import ListTransactionsService from '../services/ListTransactionsService';
+import GetBalanceTransactionsService from '../services/GetBalanceTransactionsService';
 import Transaction from '../models/Transaction';
 
 interface ICreateTransactionDTO {
@@ -17,6 +18,12 @@ interface IResponseTransactions {
   value: number;
   created_at: Date;
   updated_at: Date;
+}
+
+interface IResponseBalanceTransactions {
+  income: number;
+  outcome: number;
+  total: number;
 }
 
 class TransactionController {
@@ -35,6 +42,20 @@ class TransactionController {
         value,
       });
       return transaction;
+    });
+
+    return responseFunction;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public async getBalanceTransactions(): Promise<IResponseBalanceTransactions> {
+    const database = new Database();
+    const responseFunction = await database.executeWithDatabase(async CONN => {
+      const getBalanceTransactionsService = new GetBalanceTransactionsService(
+        CONN,
+      );
+      const balanceTransactions = await getBalanceTransactionsService.execute();
+      return balanceTransactions;
     });
 
     return responseFunction;

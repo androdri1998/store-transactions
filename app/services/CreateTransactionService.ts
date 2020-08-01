@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import TransactionsRepository from '../repositories/TransactionsRepository';
 import Transaction from '../models/Transaction';
-
-enum EType {
-  INCOME = 'income',
-  OUTCOME = 'outcome',
-}
+import { CustomConflictError } from '../utils/Errors';
 
 interface IExecuteDTO {
   title: string;
@@ -27,8 +23,13 @@ export default class CreateTransactionService {
     value,
   }: IExecuteDTO): Promise<Transaction> {
     const transactionsRepository = new TransactionsRepository(this.connection);
-    const typeTransaction =
-      type.toUpperCase() === EType.INCOME ? EType.INCOME : EType.OUTCOME;
+    const typeTransaction = type === 'income' ? 'income' : 'outcome';
+
+    const totalBalance = await transactionsRepository.getTotalBalance();
+    const hasMoney = totalBalance - value * 100;
+    if (hasMoney < 0 && type === 'outcome') {
+      throw new CustomConflictError('No have money enough to this transaction');
+    }
     const transaction = await transactionsRepository.create({
       title,
       value,

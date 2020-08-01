@@ -6,7 +6,7 @@ import truncateTables from './utils/truncateTables';
 
 describe('Transactions', () => {
   beforeEach(async () => {
-    await truncateTables([]);
+    await truncateTables(['transactions']);
   });
 
   it('Should be able to create a new transaction', async () => {
@@ -41,6 +41,6 @@ describe('Transactions', () => {
         value: 3100,
         type: 'outcome',
       });
-    expect(response.status).toBe(HTTPStatusCode.BAD_REQUEST);
+    expect(response.status).toBe(HTTPStatusCode.CONFLICT);
   });
 });

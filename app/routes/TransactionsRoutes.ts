@@ -35,8 +35,9 @@ class TransactionsRoutes {
     this.routes.get('/', async (req: Request, res: Response) => {
       const transactionController = new TransactionController();
       const transactions = await transactionController.listTransactions();
+      const balance = await transactionController.getBalanceTransactions();
 
-      return res.status(HTTPStatusCode.OK).json({ transactions, balance: {} });
+      return res.status(HTTPStatusCode.OK).json({ transactions, balance });
     });
   }
 }
