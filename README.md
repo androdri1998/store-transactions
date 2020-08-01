@@ -1,4 +1,5 @@
-# store-transactions
+# store-transactions  
+This is a simple backend application with functionalities as register transactions with type `income` and `outcome`, and list all transactions and the balance of the transactions.
   
 ## Required
 There's a file name as `.env.stage.example` with the variables that need to be createds in a file called as `.env.[stage]`:  
