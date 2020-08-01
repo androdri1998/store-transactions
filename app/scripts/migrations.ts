@@ -1,5 +1,4 @@
 import createsSqls from '../sqls/creates';
-import altersSqls from '../sqls/alters';
 import dropsSqls from '../sqls/drops';
 import { databaseTables } from '../utils/configs';
 

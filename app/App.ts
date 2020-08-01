@@ -6,7 +6,8 @@ import 'express-async-errors';
 import Helpers from './utils/Helpers';
 
 import errorMiddleware from './middlewares/error-middleware';
-import TransactionsRoutes from './routes/TransactionsRoutes';
+import logRequests from './middlewares/logRequest';
+import IndexRoutes from './routes/index';
 
 const HelpersInstance = new Helpers();
 dotenv.config({
@@ -25,14 +26,15 @@ class App {
   }
 
   private middlewares(): void {
+    this.express.use(logRequests);
     this.express.use(cors());
     this.express.use(express.json());
     this.express.use(helmet());
   }
 
   private routes(): void {
-    const TransactionsRoutesInstance = new TransactionsRoutes();
-    this.express.use('/transactions', TransactionsRoutesInstance.routes);
+    const indexRoutes = new IndexRoutes();
+    this.express.use('/', indexRoutes.routes);
   }
 
   private middlewaresErrors(): void {
