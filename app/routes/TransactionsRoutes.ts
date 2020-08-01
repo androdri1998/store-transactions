@@ -1,9 +1,10 @@
 import express, { Request, Response } from 'express';
 import HTTPStatusCode from 'http-status-codes';
 
+import TransactionController from '../controllers/TransactionController';
+
 import validateRequestMiddleware from '../middlewares/validate-request-middleware';
 import createTransaction from '../schemas/transactionsSchema';
-import Transaction from '../models/Transaction';
 
 class TransactionsRoutes {
   public routes: express.Router;
@@ -18,22 +19,24 @@ class TransactionsRoutes {
     this.routes.post(
       '/',
       validateRequestMiddleware(createTransaction, 'body'),
-      (req: Request, res: Response) => {
+      async (req: Request, res: Response) => {
         const { title, value, type } = req.body;
 
-        const transaction = new Transaction({
+        const transactionController = new TransactionController();
+        const transaction = await transactionController.createTransaction({
           title,
-          type,
           value,
+          type,
         });
 
         return res.status(HTTPStatusCode.CREATED).json(transaction);
       },
     );
-    this.routes.get('/', (req: Request, res: Response) => {
-      return res
-        .status(HTTPStatusCode.OK)
-        .json({ transactions: [], balance: {} });
+    this.routes.get('/', async (req: Request, res: Response) => {
+      const transactionController = new TransactionController();
+      const transactions = await transactionController.listTransactions();
+
+      return res.status(HTTPStatusCode.OK).json({ transactions, balance: {} });
     });
   }
 }

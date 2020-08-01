@@ -33,21 +33,6 @@ const migrations = [
       },
     ],
   },
-  {
-    version: '8e196b28-e5d3-49be-a2d9-1cfdbde4d087',
-    up: [
-      {
-        script: createsSqls.CREATE_TABLE_BALANCES,
-        description: `Create table ${databaseTables.balances}.`,
-      },
-    ],
-    down: [
-      {
-        script: dropsSqls.DROP_TABLE_BALANCES,
-        description: `Drop table ${databaseTables.balances}.`,
-      },
-    ],
-  },
 ];
 
 export default migrations;

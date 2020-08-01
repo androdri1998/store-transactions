@@ -32,7 +32,7 @@ export default class Transaction {
     this.id = uuidV4();
     this.title = title;
     this.type = type;
-    this.value = value;
+    this.value = value * 100;
     this.createdAt = parsedDate;
     this.updatedAt = updatedAt || parsedDate;
   }

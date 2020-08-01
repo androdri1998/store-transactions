@@ -1,18 +1,20 @@
+/* eslint-disable import/order */
+/* eslint-disable import/first */
 import dotenv from 'dotenv';
-import express, { Application } from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import 'express-async-errors';
 import Helpers from './utils/Helpers';
-
-import errorMiddleware from './middlewares/error-middleware';
-import logRequests from './middlewares/logRequest';
-import IndexRoutes from './routes/index';
 
 const HelpersInstance = new Helpers();
 dotenv.config({
   path: HelpersInstance.getPathEnv(process.env.NODE_ENV as string),
 });
+
+import helmet from 'helmet';
+import express, { Application } from 'express';
+import cors from 'cors';
+import 'express-async-errors';
+import errorMiddleware from './middlewares/error-middleware';
+import logRequests from './middlewares/logRequest';
+import IndexRoutes from './routes/index';
 
 class App {
   public express: Application;

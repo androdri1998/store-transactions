@@ -6,6 +6,9 @@ const selectsSqls: ISelectsSqls = {
   SELECT_MIGRATE_VERSION: `
     SELECT version FROM ${databaseTables.migrateVersions} WHERE version = ?;
   `,
+  SELECT_TRANSACTIONS: `
+    SELECT * FROM ${databaseTables.transactions};
+  `,
 };
 
 export default selectsSqls;
