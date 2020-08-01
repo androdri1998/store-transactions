@@ -41,6 +41,6 @@ describe('Transactions', () => {
         value: 3100,
         type: 'outcome',
       });
-    expect(response.status).toBe(HTTPStatusCode.CONFLICT);
+    expect(response.status).toBe(HTTPStatusCode.BAD_REQUEST);
   });
 });

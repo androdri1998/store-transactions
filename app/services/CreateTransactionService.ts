@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import TransactionsRepository from '../repositories/TransactionsRepository';
 import Transaction from '../models/Transaction';
-import { CustomConflictError } from '../utils/Errors';
+import { CustomBadRequestError } from '../utils/Errors';
 
 interface IExecuteDTO {
   title: string;
@@ -28,7 +28,9 @@ export default class CreateTransactionService {
     const totalBalance = await transactionsRepository.getTotalBalance();
     const hasMoney = totalBalance - value * 100;
     if (hasMoney < 0 && type === 'outcome') {
-      throw new CustomConflictError('No have money enough to this transaction');
+      throw new CustomBadRequestError(
+        'No have money enough to this transaction',
+      );
     }
     const transaction = await transactionsRepository.create({
       title,
